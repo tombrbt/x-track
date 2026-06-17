@@ -1,22 +1,68 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { keyPoints } from "@/lib/content";
 import Reveal from "./Reveal";
 
+const BG_POSITION = "center calc(50% - 60px)";
+
 export default function KeyPoints() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  const [lit, setLit] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          // les feux s'allument une fois le fond apparu
+          const t = setTimeout(() => setLit(true), 850);
+          observer.disconnect();
+          return () => clearTimeout(t);
+        }
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="points-cles"
       className="relative overflow-hidden py-20 sm:py-28 lg:py-32"
     >
-      {/* ---------- Background photo (camion) ---------- */}
+      {/* ---------- Fond : apparaît en fondu au scroll ---------- */}
       <div
-        className="pointer-events-none absolute inset-0 bg-ink-900 bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: "url('/bgKeypoints.png')",
-          backgroundPosition: "center calc(50% - 60px)",
-        }}
-      />
+        className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out ${
+          revealed ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {/* Base : feux éteints */}
+        <div
+          className="absolute inset-0 bg-ink-900 bg-cover bg-no-repeat brightness-125"
+          style={{
+            backgroundImage: "url('/bgKeypoints2.png')",
+            backgroundPosition: BG_POSITION,
+          }}
+        />
+        {/* Overlay : feux allumés (scintille puis apparaît) */}
+        <div
+          className={`absolute inset-0 bg-cover bg-no-repeat brightness-125 ${
+            lit ? "animate-lights-on" : "opacity-0"
+          }`}
+          style={{
+            backgroundImage: "url('/bgKeypoints.png')",
+            backgroundPosition: BG_POSITION,
+          }}
+        />
+      </div>
       {/* Assombrissement du côté droit pour la lisibilité du texte */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink-900/95 via-ink-900/55 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink-900/80 via-ink-900/35 to-transparent" />
 
       <div className="container-x relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-8">

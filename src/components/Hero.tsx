@@ -20,7 +20,7 @@ export default function Hero() {
     >
       {/* ---------- Background photo (camion + boîtier reliés par LEDs) ---------- */}
       <div
-        className="pointer-events-none absolute inset-0 bg-ink-900 bg-cover bg-no-repeat"
+        className="pointer-events-none absolute inset-0 animate-fade-bg bg-ink-900 bg-cover bg-no-repeat"
         style={{
           backgroundImage: "url('/bgHero.png')",
           backgroundPosition: "center calc(50% - -50px)",
