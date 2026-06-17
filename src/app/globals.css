@@ -22,6 +22,14 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--bg);
   color: #fff;
@@ -40,7 +48,7 @@ section[id] {
 
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+    @apply mx-auto w-full px-6 sm:px-10 lg:px-16;
   }
 
   .eyebrow {

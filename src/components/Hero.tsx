@@ -9,44 +9,31 @@ const capabilities = [
   { icon: Bell, label: "Alertes", sub: "Intelligentes" },
 ];
 
+// Europe : 8,2 Md€ de fret volés/an (données 2023) ≈ 259 € / seconde.
+const STOLEN_PER_SECOND = 259;
+
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 lg:pb-24">
-      {/* background layers */}
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.5]" />
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[640px] w-[640px] -translate-x-1/2 rounded-full bg-brand/20 blur-[140px]" />
-      <div className="pointer-events-none absolute -right-40 top-40 h-[520px] w-[520px] rounded-full bg-brand-deep/30 blur-[150px]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink-900" />
+    <section
+      id="top"
+      className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden"
+    >
+      {/* ---------- Background photo (camion + boîtier reliés par LEDs) ---------- */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-ink-900 bg-cover bg-no-repeat"
+        style={{
+          backgroundImage: "url('/bgHero.png')",
+          backgroundPosition: "center calc(50% - -50px)",
+        }}
+      />
+      {/* Légibilité : assombrissement gauche + bas */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-900/90 via-ink-900/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-ink-900/95" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink-900/80 to-transparent" />
 
-      {/* animated data-flow lines */}
-      <svg
-        className="pointer-events-none absolute right-0 top-1/4 hidden h-[420px] w-[55%] opacity-60 lg:block"
-        viewBox="0 0 800 400"
-        fill="none"
-        preserveAspectRatio="none"
-      >
-        {[60, 130, 200, 270, 340].map((y, i) => (
-          <path
-            key={y}
-            d={`M0 ${y} C 200 ${y - 40}, 400 ${y + 50}, 800 ${y - 10}`}
-            stroke="url(#flow)"
-            strokeWidth="1.5"
-            strokeDasharray="6 14"
-            className="animate-dash"
-            style={{ animationDelay: `${i * 0.6}s` }}
-          />
-        ))}
-        <defs>
-          <linearGradient id="flow" x1="0" y1="0" x2="800" y2="0">
-            <stop offset="0%" stopColor="#1f6bff" stopOpacity="0" />
-            <stop offset="50%" stopColor="#4d90ff" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#1f6bff" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <div className="container-x relative">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+      {/* ---------- Contenu haut ---------- */}
+      <div className="relative w-full flex-1 px-6 pt-32 sm:px-10 sm:pt-36 lg:px-16">
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Left — message */}
           <div className="lg:col-span-7">
             <Reveal>
@@ -57,10 +44,10 @@ export default function Hero() {
             </Reveal>
 
             <Reveal delay={80}>
-              <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-                La nouvelle génération de{" "}
-                <span className="text-brand-bright">sécurité connectée</span> pour
-                vos flottes de poids lourds.
+              <h1 className="mt-5 font-display text-3xl font-light uppercase leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
+                La nouvelle génération{" "} <br />
+                <span className="text-brand-bright">de sécurité connectée</span>{" "} <br />
+                pour les flottes de camions
               </h1>
             </Reveal>
 
@@ -84,58 +71,25 @@ export default function Hero() {
             </Reveal>
           </div>
 
-          {/* Right — device showcase */}
+          {/* Right — capacités du boîtier (superposées à la photo) */}
           <div className="lg:col-span-5">
-            <Reveal delay={200}>
-              <div className="relative mx-auto flex max-w-md items-center justify-center">
-                {/* rings */}
-                <div className="absolute h-64 w-64">
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      className="absolute inset-0 rounded-full border border-brand/40 animate-pulse-ring"
-                      style={{ animationDelay: `${i * 1}s` }}
-                    />
-                  ))}
-                  <span className="absolute inset-8 rounded-full border border-brand/20" />
-                  <span className="absolute inset-16 rounded-full border border-brand/10" />
-                </div>
-
-                {/* device */}
-                <div className="relative z-10 animate-float-slow">
-                  <div className="relative grid h-52 w-44 place-items-center rounded-[1.4rem] border border-brand/50 bg-gradient-to-br from-ink-600 to-ink-900 shadow-glow">
-                    <div className="absolute inset-0 rounded-[1.4rem] bg-[radial-gradient(circle_at_30%_20%,rgba(77,144,255,0.18),transparent_60%)]" />
-                    <ShieldCheck className="h-10 w-10 text-brand-bright" />
-                    <span className="mt-3 font-display text-sm font-bold uppercase tracking-[0.25em] text-white/90">
-                      X-Track
-                    </span>
-                    {/* ports */}
-                    <div className="absolute -bottom-2 flex gap-1.5">
-                      {[0, 1, 2].map((i) => (
-                        <span key={i} className="h-2 w-5 rounded-b bg-ink-500" />
-                      ))}
-                    </div>
-                    {/* status dot */}
-                    <span className="absolute right-4 top-4 flex h-2.5 w-2.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
-                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-bright" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
             <Reveal delay={320}>
-              <div className="mt-10 grid grid-cols-2 gap-3">
+              <div className="ml-auto max-w-xs space-y-5 lg:mt-[20.5rem] lg:translate-x-28">
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-brand-bright">
+                  Boîtier connecté
+                </p>
                 {capabilities.map((c) => (
-                  <div
-                    key={c.label}
-                    className="card flex items-center gap-3 px-4 py-3"
-                  >
-                    <c.icon className="h-5 w-5 shrink-0 text-brand-bright" />
+                  <div key={c.label} className="flex items-center gap-3">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-brand/40">
+                      <c.icon className="h-4 w-4 text-brand-bright" />
+                    </span>
                     <div className="leading-tight">
-                      <p className="text-sm font-semibold">{c.label}</p>
-                      <p className="text-xs text-muted-dim">{c.sub}</p>
+                      <p className="text-sm font-semibold uppercase tracking-wide">
+                        {c.label}
+                      </p>
+                      <p className="text-xs uppercase tracking-wide text-muted-dim">
+                        {c.sub}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -143,34 +97,33 @@ export default function Hero() {
             </Reveal>
           </div>
         </div>
+      </div>
 
-        {/* Stat band */}
+      {/* ---------- Bandeau bas : compteur + mission ---------- */}
+      <div className="relative w-full px-6 pb-10 pt-8 sm:px-10 lg:px-16">
         <Reveal delay={120}>
-          <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] md:grid-cols-3">
-            <div className="bg-ink-800/60 p-7">
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm md:grid-cols-2">
+            {/* Compteur de vols en temps réel */}
+            <div className="p-7">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-muted-dim">
-                Perdu chaque année en France
+                Coût des vols de fret en Europe — en direct
               </p>
-              <p className="mt-3 font-display text-4xl font-extrabold tracking-tight text-brand-bright sm:text-5xl">
-                <Counter to={146115000} suffix=" €" />
-              </p>
-              <p className="mt-2 text-sm text-muted">
-                À cause des vols de remorques.
+              <div className="mt-3 overflow-hidden">
+                <Counter
+                  live
+                  rate={STOLEN_PER_SECOND}
+                  suffix=" €"
+                  className="block whitespace-nowrap font-display text-4xl font-light italic tabular-nums tracking-tight text-white sm:text-5xl"
+                />
+              </div>
+              <p className="mt-2 text-sm text-white/70">
+                8,2 Md€ de marchandises volées en Europe (données 2023), soit
+                environ 259 € par seconde.
               </p>
             </div>
-            <div className="bg-ink-800/60 p-7">
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-muted-dim">
-                Remorques volées / an
-              </p>
-              <p className="mt-3 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
-                <Counter to={3247} />
-              </p>
-              <p className="mt-2 text-sm text-muted">
-                Ne soyez pas le prochain.{" "}
-                <span className="text-muted-dim">*Source : ONDRP — 2023.</span>
-              </p>
-            </div>
-            <div className="bg-ink-800/60 p-7">
+
+            {/* Mission */}
+            <div className="p-7 md:border-l md:border-white/[0.08]">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-bright">
                 Notre mission
               </p>
