@@ -64,6 +64,10 @@ export default function KeyPoints() {
       {/* Assombrissement du côté droit pour la lisibilité du texte */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink-900/80 via-ink-900/35 to-transparent" />
 
+      {/* Fondu vers les sections précédente (haut) et suivante (bas) */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-ink-900 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-ink-900 to-transparent" />
+
       <div className="container-x relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-8">
           {/* Colonne gauche laissée libre (le camion reste visible) */}
