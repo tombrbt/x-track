@@ -102,7 +102,7 @@ export default function Hero() {
       {/* ---------- Bandeau bas : compteur + mission ---------- */}
       <div className="relative w-full px-6 pb-10 pt-8 sm:px-10 lg:px-16">
         <Reveal delay={120}>
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm md:grid-cols-2">
+          <div className="grid gap-px overflow-hidden  backdrop-blur-sm md:grid-cols-2">
             {/* Compteur de vols en temps réel */}
             <div className="p-7">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-muted-dim">
@@ -123,7 +123,7 @@ export default function Hero() {
             </div>
 
             {/* Mission */}
-            <div className="p-7 md:border-l md:border-white/[0.08]">
+            <div className="p-7 ">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-bright">
                 Notre mission
               </p>
